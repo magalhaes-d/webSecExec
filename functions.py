@@ -280,8 +280,7 @@ def get_viz(dataset, type_, *args):
         fig = px.bar(
             data, x='ANO', y='COUNT', color='STATUS', text_auto=True,
             labels=dict(COUNT='', ANO='', STATUS=''),
-            barmode='relative', template='plotly_white',
-            width=1350
+            barmode='relative', template='plotly_white'
         )
 
         fig.update_traces(textfont_size=14, textangle=0, textposition='inside')
