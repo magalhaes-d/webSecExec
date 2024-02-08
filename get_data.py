@@ -98,8 +98,8 @@ if not os.listdir(folder):
 
     # download de todos os datasets da graduação e pós
     for item in [
-        (discentes_rep, 'discentes_graduacao.csv'),
-        (discentes_pos_rep, 'discentes_pos_graduacao.csv')
+        (discentes_rep, 'discentes_graduacao.parquet'),
+        (discentes_pos_rep, 'discentes_pos_graduacao.parquet')
     ]:
 
         print('A baixar dados do dataset: ' + item[1])
@@ -115,8 +115,8 @@ if not os.listdir(folder):
 
     # download de datasets da pesquisa e extensão
     for item in [
-        (pesquisa_rep, 'projetos_pesquisa.csv'),
-        (extensao_rep, 'atividades_extensao.csv')
+        (pesquisa_rep, 'projetos_pesquisa.parquet'),
+        (extensao_rep, 'atividades_extensao.parquet')
     ]:
 
         print('A baixar dados do dataset ' + item[1])
@@ -150,10 +150,10 @@ if os.listdir(folder):
     para coletar o dataset e o metadado. '''
 
     for item in [
-        (discentes_rep, 'discentes_graduacao.csv', discentes_rep),
-        (discentes_pos_rep, 'discentes_pos_graduacao.csv', discentes_pos_rep),
-        (pesquisa_rep, 'projetos_pesquisa.csv', 'https://dados.ufs.br/dataset/grupos_pesquisa'),
-        (extensao_rep, 'atividades_extensao.csv', 'https://dados.ufs.br/dataset/atividades_extensao')
+        (discentes_rep, 'discentes_graduacao.parquet', discentes_rep),
+        (discentes_pos_rep, 'discentes_pos_graduacao.parquet', discentes_pos_rep),
+        (pesquisa_rep, 'projetos_pesquisa.parquet', 'https://dados.ufs.br/dataset/grupos_pesquisa'),
+        (extensao_rep, 'atividades_extensao.parquet', 'https://dados.ufs.br/dataset/atividades_extensao')
     ]:
 
         last_update = report[item[1]]  # data extraída do último download
