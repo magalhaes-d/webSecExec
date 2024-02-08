@@ -89,93 +89,92 @@ def get_metadata(url):
 
 
 ##############
-# DOWNLOAD DE TODOS OS ARQUIVOS PELA PRIMEIRA VEZ
+# DOWNLOAD DE TODOS OS ARQUIVOS
 #############
 
 start = time.time()
 report = {}
-if not os.listdir(folder):
 
-    # download de todos os datasets da graduação e pós
-    for item in [
-        (discentes_rep, 'discentes_graduacao.parquet'),
-        (discentes_pos_rep, 'discentes_pos_graduacao.parquet')
-    ]:
+# download de todos os datasets da graduação e pós
+for item in [
+    (discentes_rep, 'discentes_graduacao.parquet'),
+    (discentes_pos_rep, 'discentes_pos_graduacao.parquet')
+]:
 
-        print('A baixar dados do dataset: ' + item[1])
-        df = get_all_datasets(item[0])  # coleta de todos os datasets
+    print('A baixar dados do dataset: ' + item[1])
+    df = get_all_datasets(item[0])  # coleta de todos os datasets
 
-        for col in df.columns:  # conversão de tipo
-            df[col] = df[col].astype('object')
+    for col in df.columns:  # conversão de tipo
+        df[col] = df[col].astype('object')
 
-        df.to_parquet(os.path.join(folder, item[1]), index=False)  # salvamento do dataset em formato parquet (faster)
+    df.to_parquet(os.path.join(folder, item[1]), index=False)  # salvamento do dataset em formato parquet (faster)
 
-        date = pd.to_datetime(get_metadata(item[0]), errors='coerce')  # atualização do metadado
+    date = pd.to_datetime(get_metadata(item[0]), errors='coerce')  # atualização do metadado
+    report[item[1]] = str(date)
+
+# download de datasets da pesquisa e extensão
+for item in [
+    (pesquisa_rep, 'projetos_pesquisa.parquet'),
+    (extensao_rep, 'atividades_extensao.parquet')
+]:
+
+    print('A baixar dados do dataset ' + item[1])
+    df = get_dataset(item[0])  # coleta do dataset
+
+    for col in df.columns:  # conversão de tipo
+        df[col] = df[col].astype('object')
+
+    df.to_parquet(os.path.join(folder, item[1]), index=False)
+
+    if 'pesquisa' in item[1]:
+        date = pd.to_datetime(get_metadata('https://dados.ufs.br/dataset/grupos_pesquisa'), errors='coerce')
+        report[item[1]] = str(date)
+    else:
+        date = pd.to_datetime(get_metadata('https://dados.ufs.br/dataset/atividades_extensao'), errors='coerce')
         report[item[1]] = str(date)
 
-    # download de datasets da pesquisa e extensão
-    for item in [
-        (pesquisa_rep, 'projetos_pesquisa.parquet'),
-        (extensao_rep, 'atividades_extensao.parquet')
-    ]:
-
-        print('A baixar dados do dataset ' + item[1])
-        df = get_dataset(item[0])  # coleta do dataset
-
-        for col in df.columns:  # conversão de tipo
-            df[col] = df[col].astype('object')
-
-        df.to_parquet(os.path.join(folder, item[1]), index=False)
-
-        if 'pesquisa' in item[1]:
-            date = pd.to_datetime(get_metadata('https://dados.ufs.br/dataset/grupos_pesquisa'), errors='coerce')
-            report[item[1]] = str(date)
-        else:
-            date = pd.to_datetime(get_metadata('https://dados.ufs.br/dataset/atividades_extensao'), errors='coerce')
-            report[item[1]] = str(date)
-
-    with open(os.path.join(folder, 'report.json'), 'w', encoding='utf-8') as f:
-        json.dump(report, f, indent=4, ensure_ascii=False)
+with open(os.path.join(folder, 'report.json'), 'w', encoding='utf-8') as f:
+    json.dump(report, f, indent=4, ensure_ascii=False)
 
 
-##############
-# ATUALIZAÇÃO DOS ARQUIVOS
-#############
-
-if os.listdir(folder):
-    with open('datasets/report.json', 'r', encoding='utf-8') as f:
-        report = json.load(f)
-
-    ''' Para evitar de usar condicionais adicionei uma tripla ao looping. Algumas categorias não não dispõe de link único
-    para coletar o dataset e o metadado. '''
-
-    for item in [
-        (discentes_rep, 'discentes_graduacao.parquet', discentes_rep),
-        (discentes_pos_rep, 'discentes_pos_graduacao.parquet', discentes_pos_rep),
-        (pesquisa_rep, 'projetos_pesquisa.parquet', 'https://dados.ufs.br/dataset/grupos_pesquisa'),
-        (extensao_rep, 'atividades_extensao.parquet', 'https://dados.ufs.br/dataset/atividades_extensao')
-    ]:
-
-        last_update = report[item[1]]  # data extraída do último download
-        last_pub = str(pd.to_datetime(get_metadata(item[-1])))  # data extraída do site
-
-        if last_pub > last_update:  # verifica se há atualização no repositório
-            df = get_dataset(item[0])
-            col = 'ano_ingresso' if 'graduacao' in item[1] else 'data_inicio'
-            df[col] = pd.to_datetime(df[col], dayfirst=True, errors='coerce')
-            old_df = pd.read_parquet(os.path.join(folder, item[1]))
-            new_df = pd.concat([old_df, df], ignore_index=True)
-            new_df[col] = pd.to_datetime(new_df[col])
-            new_df.sort_values(by=col, ascending=False, inplace=True)
-
-            new_df.to_parquet(os.path.join(folder, item[1]), index=False)  # dataset atualizado
-            report[item[1]] = last_pub  # atualiza o relatório com datas de update
-
-        else:
-            print(f'Dataset {item[1]} está em sua última versão.')
-
-    with open('datasets/report.json', 'w', encoding='utf-8') as f:
-        json.dump(report, f, indent=4, ensure_ascii=False)
+# ##############
+# # ATUALIZAÇÃO DOS ARQUIVOS
+# #############
+#
+# if os.listdir(folder):
+#     with open('datasets/report.json', 'r', encoding='utf-8') as f:
+#         report = json.load(f)
+#
+#     ''' Para evitar de usar condicionais adicionei uma tripla ao looping. Algumas categorias não não dispõe de link único
+#     para coletar o dataset e o metadado. '''
+#
+#     for item in [
+#         (discentes_rep, 'discentes_graduacao.parquet', discentes_rep),
+#         (discentes_pos_rep, 'discentes_pos_graduacao.parquet', discentes_pos_rep),
+#         (pesquisa_rep, 'projetos_pesquisa.parquet', 'https://dados.ufs.br/dataset/grupos_pesquisa'),
+#         (extensao_rep, 'atividades_extensao.parquet', 'https://dados.ufs.br/dataset/atividades_extensao')
+#     ]:
+#
+#         last_update = report[item[1]]  # data extraída do último download
+#         last_pub = str(pd.to_datetime(get_metadata(item[-1])))  # data extraída do site
+#
+#         if last_pub > last_update:  # verifica se há atualização no repositório
+#             df = get_dataset(item[0])
+#             col = 'ano_ingresso' if 'graduacao' in item[1] else 'data_inicio'
+#             df[col] = pd.to_datetime(df[col])
+#             old_df = pd.read_parquet(os.path.join(folder, item[1]))
+#             new_df = pd.concat([old_df, df], ignore_index=True)
+#             new_df[col] = pd.to_datetime(new_df[col])
+#             new_df.sort_values(by=col, ascending=False, inplace=True)
+#
+#             new_df.to_parquet(os.path.join(folder, item[1]), index=False)  # dataset atualizado
+#             report[item[1]] = last_pub  # atualiza o relatório com datas de update
+#
+#         else:
+#             print(f'Dataset {item[1]} está em sua última versão.')
+#
+#     with open('datasets/report.json', 'w', encoding='utf-8') as f:
+#         json.dump(report, f, indent=4, ensure_ascii=False)
 
 end = time.time()
 print(f'Tempo decorrido: {time.strftime("%H:%M:%S", time.gmtime(end - start))}')
