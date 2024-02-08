@@ -319,7 +319,7 @@ def get_viz(dataset, type_, *args):
         fig.update_layout(
             uniformtext_minsize=8, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-            yaxis_range=[0, max_yaxis]
+            yaxis_range=[0, max_yaxis], dragmode=False
         )
 
         return fig
@@ -349,7 +349,7 @@ def get_viz(dataset, type_, *args):
             xaxis=dict(showline=True, showgrid=False, showticklabels=True, ticks='outside'),
             yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False),
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-            yaxis_range=[-3, max_yaxis], font_color='black'
+            yaxis_range=[-3, max_yaxis], font_color='black', dragmode=False
         )
 
         if args[0] == 'Concluído':
@@ -378,7 +378,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(
             uniformtext_minsize=10, uniformtext_mode='hide',
-            xaxis=dict(tickmode='linear')
+            xaxis=dict(tickmode='linear'), dragmode=False
         )
 
         return fig
@@ -397,7 +397,7 @@ def get_viz(dataset, type_, *args):
         fig.update_layout(
             uniformtext_minsize=11, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-            xaxis=dict(tickmode='linear')
+            xaxis=dict(tickmode='linear'), dragmode=False
         )
 
         return fig
@@ -409,7 +409,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(textinfo='percent', marker=dict(line=dict(width=1)), textposition='inside',
                           insidetextorientation='horizontal')
         fig.update_traces(hovertemplate='%{label} <br>%{percent}')
-        fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide')
+        fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide', dragmode=False)
 
         return fig
 
@@ -422,7 +422,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(
-            uniformtext_minsize=11, uniformtext_mode='hide'
+            uniformtext_minsize=11, uniformtext_mode='hide', dragmode=False
         )
 
         return fig
@@ -435,7 +435,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(hovertemplate='%{label} <br>%{y}')
         fig.update_layout(
             uniformtext_minsize=11, uniformtext_mode='hide',
-            legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1)
+            legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1), dragmode=False
         )
 
         return fig
@@ -455,7 +455,7 @@ def get_viz(dataset, type_, *args):
         fig.update_layout(annotations=[dict(text='SEC', x=0.18, y=0.5, font_size=20, showarrow=False),
                           dict(text=unidade[1], x=0.82, y=0.5, font_size=20, showarrow=False)], template='plotly_white',
                           uniformtext_minsize=12, uniformtext_mode='hide',
-                          margin=dict(t=50))
+                          margin=dict(t=50), dragmode=False)
 
         return fig
 
@@ -477,7 +477,7 @@ def get_viz(dataset, type_, *args):
 
         fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(template='plotly_white',
-                          legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1))
+                          legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1), dragmode=False)
 
         return fig
 
@@ -490,7 +490,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
             uniformtext_minsize=11, uniformtext_mode='hide',
-            xaxis=dict(tickmode='linear')
+            xaxis=dict(tickmode='linear'), dragmode=False
         )
 
         return fig
@@ -528,7 +528,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='%{x} <br>%{y}')
         fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide',
-                          legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1))
+                          legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1), dragmode=False)
 
         return fig
 
@@ -552,7 +552,7 @@ def get_viz(dataset, type_, *args):
         fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(template='plotly_white',
                           legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-                          xaxis=dict(tickmode='linear'))
+                          xaxis=dict(tickmode='linear'), dragmode=False)
 
         return fig
 
