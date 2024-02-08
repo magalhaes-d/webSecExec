@@ -58,10 +58,10 @@ if category == 'Graduação e Pós-graduação':
     folder = 'datasets/discentes_graduacao.parquet'
     my_datasets = func.get_dfs(folder, 'graduacao')
 
-    '''
-    Aqui criei duas tabs, que são janelas a serem mostradas quando clicadas;
-    Na primeira tabs serão armazenadas as visualizações e na segunda, os dados
-    '''
+    # '''
+    # Aqui criei duas tabs, que são janelas a serem mostradas quando clicadas;
+    # Na primeira tabs serão armazenadas as visualizações e na segunda, os dados
+    # '''
     tab1, tab2 = st.tabs(['📈 Gráficos', '🗃 Dados'])
     with tab1:
 
@@ -113,7 +113,7 @@ if category == 'Graduação e Pós-graduação':
             st.subheader('Figura 1: Visão Geral das Turmas do Curso ao Longo do Tempo', anchor=False)
             st.caption('Por turma ingressante.')
             fig = func.get_viz(my_datasets['sec'], 'geral')
-            st.plotly_chart(fig)
+            st.plotly_chart(fig, use_container_width=True)
 
             st.info(
                 'Para excluir uma variável da visualização, selecione-a no canto superior direito do gráfico.',
