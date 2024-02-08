@@ -1,6 +1,6 @@
 {
-    "discentes_graduacao.csv": "2023-12-08 00:28:47-03:00",
-    "discentes_pos_graduacao.csv": "2023-12-08 00:32:05-03:00",
-    "projetos_pesquisa.csv": "2023-12-06 00:01:25-03:00",
-    "atividades_extensao.csv": "2023-12-04 00:02:00-03:00"
+    "discentes_graduacao.parquet": "2023-12-08 00:28:47-03:00",
+    "discentes_pos_graduacao.parquet": "2023-12-08 00:32:05-03:00",
+    "projetos_pesquisa.parquet": "2023-12-06 00:01:25-03:00",
+    "atividades_extensao.parquet": "2023-12-04 00:02:00-03:00"
 }
