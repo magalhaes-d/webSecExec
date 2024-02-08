@@ -288,7 +288,7 @@ def get_viz(dataset, type_, *args):
         fig.update_layout(
             uniformtext_minsize=14, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-            xaxis=dict(tickmode='linear')
+            xaxis=dict(tickmode='linear', dragmode=False)
         )
 
         return fig
