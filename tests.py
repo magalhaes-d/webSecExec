@@ -12,7 +12,7 @@ st.set_page_config(
     page_title="Web SecExec - UFS",
     page_icon="🎓",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
     menu_items={
         'Get Help': 'https://www.extremelycoolapp.com/help',
         'Report a bug': "https://www.extremelycoolapp.com/bug",
@@ -20,7 +20,7 @@ st.set_page_config(
     }
 )
 
-st.header('🎓 Web SecExec - UFS\n')
+st.header('🎓 Web SecExec - UFS\n', anchor=False)
 
 intro_text = '''O **Web SecExec – UFS** é uma ferramenta que coleta e compila dados relacionados ao curso de 
 Secretariado Executivo da Universidade Federal de Sergipe, com enfoque em informações sobre graduação, 
@@ -37,7 +37,7 @@ st.write(intro_text)
 # st.write('---')
 
 with st.sidebar:
-    st.header('Defina uma categoria de análise')
+    st.header('Defina uma categoria de análise', anchor=False)
     category = st.selectbox('A',
                             options=['Graduação e Pós-graduação', 'Extensão e Pesquisa'],
                             label_visibility='hidden')
@@ -396,7 +396,7 @@ if category == 'Graduação e Pós-graduação':
                 )
 
             with st.container(border=True):
-                st.subheader('Resumo')
+                st.subheader('Resumo', anchor=False)
                 txt = f'''
                 Dos discentes com vínculo concluído na graduação, **{df_pos['nome_discente'].count()}** se 
                 inscreveram para 
@@ -810,7 +810,7 @@ if category == 'Extensão e Pesquisa':
                 projects = [title.title() for title in data]
                 df_projects = pd.DataFrame({'Projetos de Pesquisa': projects})
 
-                st.subheader('Tabela 1: Projetos de Pesquisa em Execução')
+                st.subheader('Tabela 1: Projetos de Pesquisa em Execução', anchor=False)
                 st.caption('Do curso de Secretariado')
                 st.dataframe(df_projects, width=820, hide_index=True,
                              column_config={'Projetos de Pesquisa': 'Projeto de Pesquisa'}, use_container_width=True)
@@ -818,7 +818,7 @@ if category == 'Extensão e Pesquisa':
                                    'tbProjetos.csv', key='tb1')
 
             with tb2:
-                st.subheader('Tabela 2: Palavras-chave')
+                st.subheader('Tabela 2: Palavras-chave', anchor=False)
                 st.caption('Com exceção de palavras-chave comuns como "Secretariado Executivo"')
                 tb2 = func.get_viz(pesq_data, 'pesq_keywords')
                 st.dataframe(tb2, width=420, hide_index=True, use_container_width=True)
@@ -961,7 +961,7 @@ if category == 'Extensão e Pesquisa':
 
                     return df_concat
 
-                st.subheader('Figura 12: Palvras-chave')
+                st.subheader('Figura 12: Palvras-chave', anchor=False)
                 st.caption('Com execeção de palavras comuns (UFS) e nomes de cursos (Serviço Social)')
                 fig12 = func.get_viz(clean_keywords(df_pesq_comp2), 'pesq_comp_hbars')
                 st.plotly_chart(fig12, use_container_width=True)
