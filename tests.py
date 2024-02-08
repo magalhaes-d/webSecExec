@@ -65,27 +65,29 @@ if category == 'Graduação e Pós-graduação':
     tab1, tab2 = st.tabs(['📈 Gráficos', '🗃 Dados'])
     with tab1:
 
-        '''
-        Bloco usado para criar a imagem em tamanho padrão (600x350);
-        Botão de download da imagem padrão;
-        E checkbox para abrir menu de alteração das proporções da imagem;
-        O parâmetro key= do checkbox é usado para criar sua identificação, para que mais tarde eu altere seu estado
-        '''
+        # '''
+        # Bloco usado para criar a imagem em tamanho padrão (600x350);
+        # Botão de download da imagem padrão;
+        # E checkbox para abrir menu de alteração das proporções da imagem;
+        # O parâmetro key= do checkbox é usado para criar sua identificação, para que mais tarde eu altere seu estado
+        # '''
 
         download_fig = func.viz_to_download(my_datasets['sec'], 'geral').to_image(format='png', width=750,
                                                                                   height=500)
         st.download_button('**Baixar imagem (750x500)**', download_fig, 'img.png')
         img_check = st.checkbox('Alterar proporções para download', key='img_check')
 
-        '''
-        Se o checkbox for marcado é aberto o menu de alterações;
-        Nele há dois sliders que controlam as dimensões da figura;
-        A figura dinâmica é armazenada numa variável;
-        A função reset_button tem a finalidade de desmarcar o checkbox, onde uso o método session_state para alterá-lo;
-        O botão de download é criado para permitir o download da imagem dinâmica. É necessário usar o parâmetro on_click
-        para chamar a função de reset do checkbox;
-        Por fim há o método de criação da imagem
-        '''
+        # '''
+        # Se o checkbox for marcado é aberto o menu de alterações;
+        # Nele há dois sliders que controlam as dimensões da figura;
+        # A figura dinâmica é armazenada numa variável;
+        # A função reset_button tem a finalidade de desmarcar o checkbox, onde uso o método session_state
+        # para alterá-lo;
+        # O botão de download é criado para permitir o download da imagem dinâmica. É necessário usar o parâmetro
+        # on_click
+        # para chamar a função de reset do checkbox;
+        # Por fim há o método de criação da imagem
+        # '''
         if img_check:
             with st.container(border=True):
                 width_slider = st.slider('Largura', 300, 1200, 600, step=50)
@@ -103,10 +105,10 @@ if category == 'Graduação e Pós-graduação':
                 st.download_button('**Baixar e finalizar**', dynamic_fig, 'img.png', on_click=reset_button)
                 st.image(dynamic_fig)
 
-        '''
-        Container da visualização geral;
-        Chama uma função de criação de imagens, que retorna uma figura plotly, e passa o resutado para o exibidor
-        '''
+        # '''
+        # Container da visualização geral;
+        # Chama uma função de criação de imagens, que retorna uma figura plotly, e passa o resutado para o exibidor
+        # '''
         with st.container(border=True):
             st.subheader('Figura 1: Visão Geral das Turmas do Curso ao Longo do Tempo', anchor=False)
             st.caption('Por turma ingressante.')
@@ -118,10 +120,10 @@ if category == 'Graduação e Pós-graduação':
                 icon='💡'
             )
 
-            '''
-            Container do resumo dos dados;
-            O texto é gerado automaticamente com base no própio dataset
-            '''
+            # '''
+            # Container do resumo dos dados;
+            # O texto é gerado automaticamente com base no própio dataset
+            # '''
             with st.container(border=True):
                 st.subheader('Resumo dos dados', anchor=False)
 
@@ -157,9 +159,9 @@ if category == 'Graduação e Pós-graduação':
         with st.container(border=True):
             st.header('Graduação')
 
-            '''
-            Próximo container da tab 1, usado para armazenar os gráficos individuais
-            '''
+            # '''
+            # Próximo container da tab 1, usado para armazenar os gráficos individuais
+            # '''
             st.subheader('Defina as opções de análise', anchor=False)
             def1, def2 = st.columns([.5, .5], gap='small')
             data = my_datasets['sec']
@@ -193,9 +195,9 @@ if category == 'Graduação e Pós-graduação':
             max_yaxis = np.max([data1, data2])
 
         with st.container(border=True):
-            '''
-            Daqui em diante são criados os objestos que armazenarão as figuras individuais e de compração 
-            '''
+            # '''
+            # Daqui em diante são criados os objestos que armazenarão as figuras individuais e de compração
+            # '''
             upper1, upper2 = st.columns([.5, .5], gap='small')
 
             # condicionais para criação dos títulos das colunas upper e bottom
@@ -360,9 +362,9 @@ if category == 'Graduação e Pós-graduação':
 
         st.write('---')
 
-        '''
-        Aqui se inicia as análises dos dados sobre as pós-graduação
-        '''
+        # '''
+        # Aqui se inicia as análises dos dados sobre as pós-graduação
+        # '''
         with st.container(border=True):
             st.subheader('Pós-graduação', anchor=False)
 
@@ -405,14 +407,14 @@ if category == 'Graduação e Pós-graduação':
 
                 st.write(txt)
                 st.caption('Texto gerado automaticamente.')
-    '''
-    Segunda tab, usada para armazenamento dos dados
-    '''
+    # '''
+    # Segunda tab, usada para armazenamento dos dados
+    # '''
     with tab2:
 
-        '''
-        Conjunto de dados da graduação
-        '''
+        # '''
+        # Conjunto de dados da graduação
+        # '''
         with st.container(border=True):
             st.subheader('Conjunto de Dados Sobre Discentes de Graduação', anchor=False)
             st.caption('Pré-visualização')
@@ -452,9 +454,9 @@ if category == 'Graduação e Pós-graduação':
 
         st.write('---')
 
-        '''
-        Conjunto de dados da pós-graduação
-        '''
+        # '''
+        # Conjunto de dados da pós-graduação
+        # '''
         with st.container(border=True):
             st.subheader('Conjunto de Dados Sobre Discentes de Pós-graduação', anchor=False)
             st.caption('Pré-visualização')
@@ -492,9 +494,9 @@ if category == 'Graduação e Pós-graduação':
                         key='down2'
                     )
 
-'''
-Início do bloco referente aos dados da extensão e pesquisa
-'''
+# '''
+# Início do bloco referente aos dados da extensão e pesquisa
+# '''
 
 if category == 'Extensão e Pesquisa':
     my_datasets = func.get_dfs('datasets/atividades_extensao.parquet', 'extensao')
@@ -505,9 +507,9 @@ if category == 'Extensão e Pesquisa':
 
     tab1, tab2 = st.tabs(['📈 Gráficos', '🗃 Dados'])
 
-    '''
-    Tab 1: Visualização dos dados
-    '''
+    # '''
+    # Tab 1: Visualização dos dados
+    # '''
     with tab1:
 
         with st.container(border=True):
@@ -527,9 +529,9 @@ if category == 'Extensão e Pesquisa':
         # dataset filtrado
         filtered_data = ext_data.query('@max_year >= ano >= @min_year')
 
-        '''
-        Figura 1 extensão
-        '''
+        # '''
+        # Figura 1 extensão
+        # '''
         with st.container(border=True):
             st.subheader('Figura 1: Visão Geral das Atividades de Extensão ao Longo do Tempo', anchor=False)
             fig1 = func.get_viz(filtered_data, 'ext_geral')
@@ -541,9 +543,9 @@ if category == 'Extensão e Pesquisa':
 
             pie1, pie2 = st.columns([.45, .55])
 
-            '''
-            Figura 2 extensão
-            '''
+            # '''
+            # Figura 2 extensão
+            # '''
             with pie1:
                 st.subheader('Figura 2: Áreas Temáticas', anchor=False)
                 fig2 = func.get_viz(filtered_data, 'ext_pie', 'area_tematica')
@@ -552,9 +554,9 @@ if category == 'Extensão e Pesquisa':
                     '**Baixar imagem**', fig2.to_image(format='png', width=750, height=500), 'img.png', key='fig2'
                 )
 
-            '''
-            Figura 3 extensão
-            '''
+            # '''
+            # Figura 3 extensão
+            # '''
             with pie2:
                 st.subheader('Figura 3: Linhas de Extensão', anchor=False)
                 fig3 = func.get_viz(
@@ -568,9 +570,9 @@ if category == 'Extensão e Pesquisa':
             st.write('---')
             pie3, pie4 = st.columns([.46, .54])
 
-            '''
-            Figura 4 extensão
-            '''
+            # '''
+            # Figura 4 extensão
+            # '''
             with pie3:
                 st.subheader('Figura 4: Financiamento das Atividades', anchor=False)
                 data = filtered_data
@@ -595,9 +597,9 @@ if category == 'Extensão e Pesquisa':
                     '**Baixar imagem**', fig4.to_image(format='png', width=1200, height=800), 'img.png', key='fig4'
                 )
 
-            '''
-            Figura 5 extensão
-            '''
+            # '''
+            # Figura 5 extensão
+            # '''
             with pie4:
                 st.subheader('Figura 5: Ranking de Professores por Coordenação de Atividades', anchor=False)
                 top_docentes = filtered_data['coordenador'].value_counts().sort_values(ascending=True)
@@ -622,9 +624,9 @@ if category == 'Extensão e Pesquisa':
 
             st.write('---')
 
-            '''
-            Texto 1 extensão
-            '''
+            # '''
+            # Texto 1 extensão
+            # '''
             with st.container(border=True):
                 st.subheader('Resumo', anchor=False)
                 top3_temas = (filtered_data.query("area_tematica != 'None'").groupby("area_tematica").size()
@@ -665,9 +667,9 @@ if category == 'Extensão e Pesquisa':
 
         st.write('---')
 
-        '''
-        Bloco destinado à comparação entre o departamento de secretariado e o ccsa ou a ufs
-        '''
+        # '''
+        # Bloco destinado à comparação entre o departamento de secretariado e o ccsa ou a ufs
+        # '''
         with st.container(border=True):
             st.header('Comparação com outras unidades', anchor=False)
             st.write('**Defina a janela temporal da análise**')
@@ -684,9 +686,9 @@ if category == 'Extensão e Pesquisa':
             with null_space:
                 comp = st.selectbox('Defina a unidade de comparação', ['CCSA', 'UFS'], index=0)
 
-        '''
-        Container com as figuras de comparação
-        '''
+        # '''
+        # Container com as figuras de comparação
+        # '''
         with st.container(border=True):
 
             comp1, comp2 = st.columns(2)
@@ -770,9 +772,9 @@ if category == 'Extensão e Pesquisa':
 
         st.write('---')
 
-        '''
-        Bloco destinado às visualizações da Pesquisa
-        '''
+        # '''
+        # Bloco destinado às visualizações da Pesquisa
+        # '''
         with st.container(border=True):
 
             pesq_data = func.get_dfs('datasets/projetos_pesquisa.parquet', 'pesquisa')
