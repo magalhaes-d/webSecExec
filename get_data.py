@@ -161,9 +161,11 @@ if os.listdir(folder):
 
         if last_pub > last_update:  # verifica se há atualização no repositório
             df = get_dataset(item[0])
+            col = 'ano_ingresso' if 'graduacao' in item[1] else 'data_inicio'
+            df[col] = pd.to_datetime(df[col], dayfirst=True, errors='coerce')
             old_df = pd.read_parquet(os.path.join(folder, item[1]))
             new_df = pd.concat([old_df, df], ignore_index=True)
-            col = 'ano_ingresso' if 'graduacao' in item[1] else 'data_inicio'
+            new_df[col] = pd.to_datetime(new_df[col])
             new_df.sort_values(by=col, ascending=False, inplace=True)
 
             new_df.to_parquet(os.path.join(folder, item[1]), index=False)  # dataset atualizado
