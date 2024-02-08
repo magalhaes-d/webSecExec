@@ -28,8 +28,8 @@ Secretariado Executivo da Universidade Federal de Sergipe, com enfoque em inform
 pós-graduação, atividades de extensão e projetos de pesquisa. A aplicação é atualizada mensalmente, 
 utilizando dados provenientes do [repositório universitário](https://dados.ufs.br/dataset/). O menu à esquerda 
 fornece informações adicionais sobre a ferramenta.\n
-Desenvolvido para otimizar a análise de dados acadêmicos, o **Web SecExec – UFS** é fruto de uma iniciativa pessoal de 
-aprendizado. É recomendado o acesso a partir de um desktop para melhor visualização das figuras.\n
+É recomendado o acesso a partir de um desktop para melhor visualização das figuras. Caso ocorra algum erro ou bug
+com a ferramenta, por gentileza, sinalizar por meio do endereço *danielmagalhaes38@hotmail.com*.\n
 Autor: [Daniel Magalhães](https://www.linkedin.com/in/magalhaesd). Mais projetos podem ser encontrados 
 [aqui](https://www.datascienceportfol.io/magalhaesd).
 '''
