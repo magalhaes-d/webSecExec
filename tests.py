@@ -16,7 +16,8 @@ st.set_page_config(
     menu_items={
         'Get Help': 'https://www.extremelycoolapp.com/help',
         'Report a bug': "https://www.extremelycoolapp.com/bug",
-        'About': "# This is a header. This is an *extremely* cool app!"
+        'About': "#Gostou da ferramenta?\nMe siga no Linkedin: [Daniel Magalhães]("
+                 "https://www.linkedin.com/in/magalhaesd/) "
     }
 )
 
@@ -28,9 +29,9 @@ pós-graduação, atividades de extensão e projetos de pesquisa. A aplicação 
 utilizando dados provenientes do [repositório universitário](https://dados.ufs.br/dataset/). O menu à esquerda 
 fornece informações adicionais sobre a ferramenta.\n
 Desenvolvido para otimizar a análise de dados acadêmicos, o **Web SecExec – UFS** é fruto de uma iniciativa pessoal de 
-aprendizado. Mais projetos podem ser encontrados 
-[aqui](https://www.datascienceportfol.io/magalhaesd).\n
-Autor: [Daniel Magalhães](https://www.linkedin.com/in/magalhaesd).
+aprendizado. É recomendado o acesso a partir de um desktop para melhor visualização das figuras.\n
+Autor: [Daniel Magalhães](https://www.linkedin.com/in/magalhaesd). Mais projetos podem ser encontrados 
+[aqui](https://www.datascienceportfol.io/magalhaesd).
 '''
 
 st.write(intro_text)
