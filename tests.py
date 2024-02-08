@@ -157,7 +157,7 @@ if category == 'Graduação e Pós-graduação':
         st.write('---')
 
         with st.container(border=True):
-            st.header('Graduação')
+            st.header('Graduação', anchor=False)
 
             # '''
             # Próximo container da tab 1, usado para armazenar os gráficos individuais
@@ -198,7 +198,7 @@ if category == 'Graduação e Pós-graduação':
             # '''
             # Daqui em diante são criados os objestos que armazenarão as figuras individuais e de compração
             # '''
-            upper1, upper2 = st.columns([.5, .5], gap='small')
+            upper1, upper2 = st.columns([.5, .5], gap='large')
 
             # condicionais para criação dos títulos das colunas upper e bottom
             if var == 'Concluído':
@@ -213,20 +213,20 @@ if category == 'Graduação e Pós-graduação':
 
             # bloco responsável por criar a figura de barras nº 2
             with upper1:
-                st.subheader(f'Figura 2: {header_label} x Total de Ingressos')
+                st.subheader(f'Figura 2: {header_label} x Total de Ingressos', anchor=False)
                 st.caption('Por turma ingressante.')
                 fig2 = func.get_viz(my_datasets['sec'], 'unico', var, years, max_yaxis + 1)
-                st.plotly_chart(fig2)
+                st.plotly_chart(fig2, use_container_width=True)
                 fig2_bttn = st.download_button(
                     '**Baixar imagem**', fig2.to_image(format='png', width=750, height=500), 'img.png', key='fig2'
                 )
 
             # bloco responsável por criar a figura de barras nº 2
             with upper2:
-                st.subheader(f'Figura 3: Mediana de {header_label} da unidade {comp}')
+                st.subheader(f'Figura 3: Mediana de {header_label} da unidade {comp}', anchor=False)
                 st.caption('Por turma ingressante.')
                 fig3 = func.get_viz(my_datasets[comp.lower()], 'unico', var, years, max_yaxis + 1)
-                st.plotly_chart(fig3)
+                st.plotly_chart(fig3, use_container_width=True)
                 fig3_bttn = st.download_button(
                     '**Baixar imagem**', fig3.to_image(format='png', width=750, height=500), 'img.png', key='fig3'
                 )
@@ -285,7 +285,7 @@ if category == 'Graduação e Pós-graduação':
             '''
             Segunda parte dos gráficos únicos
             '''
-            bottom1, bottom2 = st.columns([.5, .5], gap='small')
+            bottom1, bottom2 = st.columns([.5, .5], gap='large')
 
             var_label = f'% {var.upper()}'
             data1 = my_datasets['sec'].query('STATUS.isin([@var_label])')['COUNT'].max()
@@ -293,25 +293,25 @@ if category == 'Graduação e Pós-graduação':
             max_yaxis = np.max([data1, data2]) * 100
 
             with bottom1:
-                st.subheader(f'Figura 4: Taxa de {header_label} das Turmas do Curso')
+                st.subheader(f'Figura 4: Taxa de {header_label} das Turmas do Curso', anchor=False)
                 st.caption('Por turma ingressante.')
                 fig4 = func.get_viz(my_datasets['sec'], 'taxa', var, years, max_yaxis + 10)
-                st.plotly_chart(fig4)
+                st.plotly_chart(fig4, use_container_width=True)
                 fig4_bttn = st.download_button(
                     '**Baixar imagem**', fig4.to_image(format='png', width=750, height=500), 'img.png', key='fig4'
                 )
 
             with bottom2:
-                st.subheader(f'Figura 5: Taxa Mediana de {header_label} da Unidade {comp}')
+                st.subheader(f'Figura 5: Taxa Mediana de {header_label} da Unidade {comp}', anchor=False)
                 st.caption('Por turma ingressante.')
                 fig5 = func.get_viz(my_datasets[comp.lower()], 'taxa', var, years, max_yaxis + 10)
-                st.plotly_chart(fig5)
+                st.plotly_chart(fig5, use_container_width=True)
                 fig5_bttn = st.download_button(
                     '**Baixar imagem**', fig5.to_image(format='png', width=750, height=500), 'img.png', key='fig5'
                 )
 
             with st.container(border=True):
-                st.subheader('Resumo')
+                st.subheader('Resumo', anchor=False)
 
                 sec = my_datasets['sec'].query('STATUS == @var_label')
                 sec = sec.loc[(sec['ANO'] >= str(years[0])) & (sec['ANO'] <= str(years[1]))]
@@ -376,12 +376,12 @@ if category == 'Graduação e Pós-graduação':
                         .groupby('nome_curso').size()
                         .sort_values(ascending=False))
 
-            pie1, pie2 = st.columns(2)
+            pie1, pie2 = st.columns(2, gap='large')
             with pie1:
                 st.subheader('Figura 6: Aplicações em Pós-Graduação por Graduados', anchor=False)
                 st.caption('Por discente com vínculo concluído na graduação.')
                 fig6 = func.get_viz(df_fig, 'pos')
-                st.plotly_chart(fig6)
+                st.plotly_chart(fig6, use_container_width=True)
                 fig6_bttn = st.download_button(
                     '**Baixar imagem**', fig6.to_image(format='png', width=750, height=500), 'img.png', key='fig6'
                 )
@@ -390,7 +390,7 @@ if category == 'Graduação e Pós-graduação':
                 st.subheader('Figura 7: Áreas de especialização mais comuns', anchor=False)
                 st.caption('Por discente com vínculo concluído na graduação.')
                 fig7 = func.get_viz(pd.DataFrame({'STATUS': top_area.index, 'COUNT': top_area.values}), 'pos')
-                st.plotly_chart(fig7)
+                st.plotly_chart(fig7, use_container_width=True)
                 fig7_bttn = st.download_button(
                     '**Baixar imagem**', fig7.to_image(format='png', width=750, height=500), 'img.png', key='fig7'
                 )
@@ -425,7 +425,7 @@ if category == 'Graduação e Pós-graduação':
                 for col in grad_data.columns:
                     grad_data[col] = grad_data[col].astype(str)
 
-                st.dataframe(grad_data.head(10))
+                st.dataframe(grad_data.head(10), use_container_width=True)
                 st.caption('Fonte: https://dados.ufs.br/dataset/discentes_graduacao')
 
             with download1:
@@ -467,7 +467,7 @@ if category == 'Graduação e Pós-graduação':
                 for col in grad_data.columns:
                     grad_data[col] = grad_data[col].astype(str)
 
-                st.dataframe(grad_data.head(10))
+                st.dataframe(grad_data.head(10), use_container_width=True)
                 st.caption('Fonte: https://dados.ufs.br/dataset/discentes_pos_graduacao')
 
             with download1:
@@ -535,13 +535,13 @@ if category == 'Extensão e Pesquisa':
         with st.container(border=True):
             st.subheader('Figura 1: Visão Geral das Atividades de Extensão ao Longo do Tempo', anchor=False)
             fig1 = func.get_viz(filtered_data, 'ext_geral')
-            st.plotly_chart(fig1)
+            st.plotly_chart(fig1, use_container_width=True)
             fig1_bttn = st.download_button(
                 '**Baixar imagem**', fig1.to_image(format='png', width=750, height=500), 'img.png', key='fig1'
             )
             st.write('---')
 
-            pie1, pie2 = st.columns([.45, .55])
+            pie1, pie2 = st.columns([.45, .55], gap='large')
 
             # '''
             # Figura 2 extensão
@@ -549,7 +549,7 @@ if category == 'Extensão e Pesquisa':
             with pie1:
                 st.subheader('Figura 2: Áreas Temáticas', anchor=False)
                 fig2 = func.get_viz(filtered_data, 'ext_pie', 'area_tematica')
-                st.plotly_chart(fig2)
+                st.plotly_chart(fig2, use_container_width=True)
                 fig2_bttn = st.download_button(
                     '**Baixar imagem**', fig2.to_image(format='png', width=750, height=500), 'img.png', key='fig2'
                 )
@@ -562,13 +562,13 @@ if category == 'Extensão e Pesquisa':
                 fig3 = func.get_viz(
                     filtered_data[filtered_data['linha_extensao'] != 'None'].copy(), 'ext_horizontal', 'linha_extensao'
                 )
-                st.plotly_chart(fig3)
+                st.plotly_chart(fig3, use_container_width=True)
                 fig3_bttn = st.download_button(
                     '**Baixar imagem**', fig3.to_image(format='png', width=1200, height=800), 'img.png', key='fig3'
                 )
 
             st.write('---')
-            pie3, pie4 = st.columns([.46, .54])
+            pie3, pie4 = st.columns([.46, .54], gap='large')
 
             # '''
             # Figura 4 extensão
@@ -592,7 +592,7 @@ if category == 'Extensão e Pesquisa':
                         data.iloc[i, -1] = 'Sem financiamento'
 
                 fig4 = func.get_viz(data, 'ext_pie', 'tipo')
-                st.plotly_chart(fig4)
+                st.plotly_chart(fig4, use_container_width=True)
                 fig4_bttn = st.download_button(
                     '**Baixar imagem**', fig4.to_image(format='png', width=1200, height=800), 'img.png', key='fig4'
                 )
@@ -617,7 +617,7 @@ if category == 'Extensão e Pesquisa':
                     uniformtext_minsize=10, uniformtext_mode='hide'
                 )
 
-                st.plotly_chart(fig5)
+                st.plotly_chart(fig5, use_container_width=True)
                 fig5_bttn = st.download_button(
                     '**Baixar imagem**', fig5.to_image(format='png', width=1200, height=800), 'img.png', key='fig5'
                 )
@@ -691,7 +691,7 @@ if category == 'Extensão e Pesquisa':
         # '''
         with st.container(border=True):
 
-            comp1, comp2 = st.columns(2)
+            comp1, comp2 = st.columns(2, gap='large')
 
             # Figura 1
             with comp1:
@@ -706,7 +706,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 6: Desenvolvimento de atividades', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig6 = func.get_viz(df_comp_bar, 'ext_comp')
-                st.plotly_chart(fig6)
+                st.plotly_chart(fig6, use_container_width=True)
                 fig6_bttn = st.download_button(
                     '**Baixar imagem**', fig6.to_image(format='png', width=1200, height=800), 'img.png', key='fig6'
                 )
@@ -724,14 +724,14 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 7: Top 5 Áreas Temáticas', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig7 = func.get_viz(df_comp_pie, 'ext_comp_pie')
-                st.plotly_chart(fig7)
+                st.plotly_chart(fig7, use_container_width=True)
                 fig7_bttn = st.download_button(
                     '**Baixar imagem**', fig7.to_image(format='png', width=1200, height=800), 'img.png', key='fig7'
                 )
 
             st.write('---')
 
-            comp3, comp4 = st.columns(2)
+            comp3, comp4 = st.columns(2, gap='large')
 
             # Figura 3
             with comp3:
@@ -746,7 +746,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 8: Top 5 Linhas de Extensão', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig8 = func.get_viz(df_comp_hbar, 'ext_comp_hbar')
-                st.plotly_chart(fig8)
+                st.plotly_chart(fig8, use_container_width=True)
                 fig8_bttn = st.download_button(
                     '**Baixar imagem**', fig8.to_image(format='png', width=1200, height=800), 'img.png', key='fig8'
                 )
@@ -765,7 +765,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 9: Financiamento e Origem', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig9 = func.get_viz(df_comp_pie_financ, 'ext_comp_pie')
-                st.plotly_chart(fig9)
+                st.plotly_chart(fig9, use_container_width=True)
                 fig9_bttn = st.download_button(
                     '**Baixar imagem**', fig9.to_image(format='png', width=1200, height=800), 'img.png', key='fig9'
                 )
@@ -797,14 +797,14 @@ if category == 'Extensão e Pesquisa':
         with st.container(border=True):
             st.subheader('Figura 10: Projetos de Pesquisa ao Longo do Tempo', anchor=False)
             fig10 = func.get_viz(pesq_data, 'pesquisa')
-            st.plotly_chart(fig10)
+            st.plotly_chart(fig10, use_container_width=True)
             fig10_bttn = st.download_button(
                 '**Baixar imagem**', fig10.to_image(format='png', width=1200, height=800), 'img.png', key='fig10'
             )
 
             st.write('---')
 
-            tb1, tb2 = st.columns([.55, .33])
+            tb1, tb2 = st.columns([.55, .33], gap='large')
             with tb1:
                 data = pesq_data.query('situacao == "EM EXECUÇÃO"')['titulo'].unique()
                 projects = [title.title() for title in data]
@@ -813,7 +813,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Tabela 1: Projetos de Pesquisa em Execução')
                 st.caption('Do curso de Secretariado')
                 st.dataframe(df_projects, width=820, hide_index=True,
-                             column_config={'Projetos de Pesquisa': 'Projeto de Pesquisa'})
+                             column_config={'Projetos de Pesquisa': 'Projeto de Pesquisa'}, use_container_width=True)
                 st.download_button('**Baixar tabela**', func.convert_df(df_projects, '.csv'),
                                    'tbProjetos.csv', key='tb1')
 
@@ -821,13 +821,13 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Tabela 2: Palavras-chave')
                 st.caption('Com exceção de palavras-chave comuns como "Secretariado Executivo"')
                 tb2 = func.get_viz(pesq_data, 'pesq_keywords')
-                st.dataframe(tb2, width=420, hide_index=True)
+                st.dataframe(tb2, width=420, hide_index=True, use_container_width=True)
                 st.download_button('**Baixar tabela**', func.convert_df(tb2, '.csv'),
                                    'tbPalvrasChave.csv', key='tb2')
 
             st.write('---')
 
-            tb3, tb4 = st.columns(2)
+            tb3, tb4 = st.columns(2, gap='large')
             with tb3:
                 data_gp = (pesq_data.query('situacao == "EM EXECUÇÃO"').groupby('grupo_pesquisa', as_index=False)
                            ['titulo'].count().sort_values(by='titulo', ascending=False))
@@ -835,7 +835,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Tabela 3: Projetos em Execução por Grupos de Pesquisa', anchor=False)
                 st.dataframe(data_gp, width=620, column_config={
                     'grupo_pesquisa': 'Grupo de Pesquisa', 'titulo': 'Projetos'},
-                             hide_index=True)
+                             hide_index=True, use_container_width=True)
                 st.download_button('**Baixar tabela**', func.convert_df(data_gp, '.csv'),
                                    'tbGrupos.csv', key='tb3')
 
@@ -845,7 +845,7 @@ if category == 'Extensão e Pesquisa':
                             .size().sort_values(by='size', ascending=False))
                 st.dataframe(data_lin,
                              column_config={'linha_pesquisa': 'Linha de Pesquisa', 'size': 'Ocorrências'},
-                             width=620, hide_index=True)
+                             width=620, hide_index=True, use_container_width=True)
                 st.download_button('**Baixar tabela**',
                                    func.convert_df(data_lin.sort_values(by='size', ascending=False), '.csv'),
                                    'tbLinhas.csv', key='tb4')
@@ -859,8 +859,8 @@ if category == 'Extensão e Pesquisa':
                 df_area = (pesq_data.groupby('area_conhecimento_cnpq', as_index=False)
                            .size().sort_values(by='size', ascending=False))
                 st.dataframe(df_area, width=620, hide_index=True,
-                             column_config={'area_conhecimento_cnpq': 'Área do Conhecimento', 'size': 'Ocorrências'}
-                             )
+                             column_config={'area_conhecimento_cnpq': 'Área do Conhecimento', 'size': 'Ocorrências'},
+                             use_container_width=True)
                 st.download_button('**Baixar tabela**',
                                    func.convert_df(
                                        pesq_data.groupby('area_conhecimento_cnpq', as_index=False)
@@ -906,7 +906,7 @@ if category == 'Extensão e Pesquisa':
                 comp = st.selectbox('Defina a unidade de comparação', ['CCSA', 'UFS'], index=0, key='comp_pesq_y')
 
         with st.container(border=True):
-            pesq_comp1, pesq_comp2 = st.columns(2)
+            pesq_comp1, pesq_comp2 = st.columns(2, gap='large')
 
             with pesq_comp1:
                 df_pesq_comp = func.get_dfs(
@@ -916,7 +916,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 11: Desenvolvimento de Projetos', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig11 = func.get_viz(df_pesq_comp, 'pesq_comp_bars')
-                st.plotly_chart(fig11)
+                st.plotly_chart(fig11, use_container_width=True)
                 fig11_bttn = st.download_button(
                     '**Baixar imagem**', fig11.to_image(format='png', width=750, height=500), 'img.png', key='fig11'
                 )
@@ -964,14 +964,14 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 12: Palvras-chave')
                 st.caption('Com execeção de palavras comuns (UFS) e nomes de cursos (Serviço Social)')
                 fig12 = func.get_viz(clean_keywords(df_pesq_comp2), 'pesq_comp_hbars')
-                st.plotly_chart(fig12)
+                st.plotly_chart(fig12, use_container_width=True)
                 fig12_bttn = st.download_button(
                     '**Baixar imagem**', fig12.to_image(format='png', width=750, height=500), 'img.png', key='fig12'
                 )
 
             st.write('---')
 
-            pesq_comp3, pesq_comp4 = st.columns(2)
+            pesq_comp3, pesq_comp4 = st.columns(2, gap='large')
             with pesq_comp3:
                 df_pesq_comp3 = func.get_dfs(
                     'datasets/projetos_pesquisa.parquet', 'pesq_comp', min_year, max_year, 'linha_pesquisa'
@@ -980,7 +980,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 13: Linhas de Pesquisa', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig13 = func.get_viz(df_pesq_comp3, 'pesq_comp_hbars')
-                st.plotly_chart(fig13)
+                st.plotly_chart(fig13, use_container_width=True)
                 fig13_bttn = st.download_button(
                     '**Baixar imagem**', fig13.to_image(format='png', width=750, height=500), 'img.png', key='fig13'
                 )
@@ -993,7 +993,7 @@ if category == 'Extensão e Pesquisa':
                 st.subheader('Figura 14: Áreas do Conhecimento', anchor=False)
                 st.caption(f'Mediana dos cursos da unidade {comp}')
                 fig14 = func.get_viz(df_pesq_comp3, 'pesq_comp_hbars')
-                st.plotly_chart(fig14)
+                st.plotly_chart(fig14, use_container_width=True)
                 fig14_bttn = st.download_button(
                     '**Baixar imagem**', fig14.to_image(format='png', width=750, height=500), 'img.png', key='fig14'
                 )
@@ -1010,7 +1010,7 @@ if category == 'Extensão e Pesquisa':
                 for col in grad_data.columns:
                     grad_data[col] = grad_data[col].astype(str)
 
-                st.dataframe(grad_data.head(10))
+                st.dataframe(grad_data.head(10), use_container_width=True)
                 st.caption('Fonte: https://dados.ufs.br/dataset/atividades_extensao')
 
             with download1:
@@ -1047,7 +1047,7 @@ if category == 'Extensão e Pesquisa':
                 for col in grad_data.columns:
                     grad_data[col] = grad_data[col].astype(str)
 
-                st.dataframe(grad_data.head(10))
+                st.dataframe(grad_data.head(10), use_container_width=True)
                 st.caption('Fonte: https://dados.ufs.br/dataset/projetos_pesquisa')
 
             with download1:

@@ -283,9 +283,10 @@ def get_viz(dataset, type_, *args):
             barmode='relative', template='plotly_white'
         )
 
-        fig.update_traces(textfont_size=14, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=9, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
-            uniformtext_minsize=14, uniformtext_mode='hide',
+            uniformtext_minsize=9, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
             xaxis=dict(tickmode='linear'), dragmode=False
         )
@@ -310,11 +311,11 @@ def get_viz(dataset, type_, *args):
         fig = px.bar(
             data, x='ANO', y='COUNT', color='STATUS', text_auto=True,
             labels=dict(COUNT='', ANO='', STATUS=''),
-            barmode='group', template='plotly_white',
-            width=620
+            barmode='group', template='plotly_white'
         )
 
         fig.update_traces(textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
             uniformtext_minsize=8, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
@@ -338,10 +339,11 @@ def get_viz(dataset, type_, *args):
         fig = px.line(
             data, x='ANO', y='COUNT', color='STATUS', text=labels,
             labels=dict(COUNT='', ANO='', STATUS=''),
-            template='plotly_white', width=620
+            template='plotly_white'
         )
 
         fig.update_traces(textposition='top right', opacity=.8)
+        fig.update_traces(hovertemplate='Ano: %{x} <br>Taxa: %{text}')
         fig.update_layout(
             uniformtext_minsize=6,
             xaxis=dict(showline=True, showgrid=False, showticklabels=True, ticks='outside'),
@@ -370,11 +372,12 @@ def get_viz(dataset, type_, *args):
         data = dataset.groupby('STATUS', as_index=False)['COUNT'].sum()
         data.sort_values(by='COUNT', ascending=True, inplace=True)
         fig = px.bar(data, x='COUNT', y='STATUS', text='COUNT', labels={'STATUS': '', 'COUNT': ''},
-                     template='plotly_white', width=620)
+                     template='plotly_white')
 
-        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=10, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(
-            uniformtext_minsize=12, uniformtext_mode='hide',
+            uniformtext_minsize=10, uniformtext_mode='hide',
             xaxis=dict(tickmode='linear')
         )
 
@@ -387,11 +390,12 @@ def get_viz(dataset, type_, *args):
     if type_ == 'ext_geral':
         data = dataset.groupby('ano', as_index=False)['tipo_atividade'].value_counts()
         fig = px.bar(data, 'ano', 'count', color='tipo_atividade', text_auto=True,
-                     labels=dict(ano='', count='', tipo_atividade=''), template='plotly_white', width=1350)
+                     labels=dict(ano='', count='', tipo_atividade=''), template='plotly_white')
 
-        fig.update_traces(textfont_size=14, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
-            uniformtext_minsize=14, uniformtext_mode='hide',
+            uniformtext_minsize=11, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
             xaxis=dict(tickmode='linear')
         )
@@ -400,11 +404,12 @@ def get_viz(dataset, type_, *args):
 
     if type_ == 'ext_pie':
         data = dataset.groupby(args[0], as_index=False).size()
-        fig = px.pie(data, names=args[0], values='size', hole=.5, template='plotly_white', width=620)
+        fig = px.pie(data, names=args[0], values='size', hole=.5, template='plotly_white')
 
         fig.update_traces(textinfo='percent', marker=dict(line=dict(width=1)), textposition='inside',
                           insidetextorientation='horizontal')
-        fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
+        fig.update_traces(hovertemplate='%{label} <br>%{percent}')
+        fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide')
 
         return fig
 
@@ -412,22 +417,24 @@ def get_viz(dataset, type_, *args):
         col = args[0]
         data = dataset.groupby(col, as_index=False).size().sort_values(by='size')
         fig = px.bar(data, 'size', col, text='size', labels={col: '', 'size': ''},
-                     template='plotly_white', width=750)
+                     template='plotly_white')
 
-        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(
-            uniformtext_minsize=12, uniformtext_mode='hide'
+            uniformtext_minsize=11, uniformtext_mode='hide'
         )
 
         return fig
 
     if type_ == 'ext_comp':
         fig = px.bar(dataset, 'unidade', 'count', dataset.columns[-2], barmode='group', template='plotly_white',
-                     labels={'unidade': '', 'count': '', dataset.columns[-2]: ''}, text_auto=True, width=620)
+                     labels={'unidade': '', 'count': '', dataset.columns[-2]: ''}, text_auto=True)
 
-        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='%{label} <br>%{y}')
         fig.update_layout(
-            uniformtext_minsize=12, uniformtext_mode='hide',
+            uniformtext_minsize=11, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1)
         )
 
@@ -447,7 +454,7 @@ def get_viz(dataset, type_, *args):
                           insidetextorientation='horizontal')
         fig.update_layout(annotations=[dict(text='SEC', x=0.18, y=0.5, font_size=20, showarrow=False),
                           dict(text=unidade[1], x=0.82, y=0.5, font_size=20, showarrow=False)], template='plotly_white',
-                          uniformtext_minsize=12, uniformtext_mode='hide', width=700,
+                          uniformtext_minsize=12, uniformtext_mode='hide',
                           margin=dict(t=50))
 
         return fig
@@ -468,8 +475,8 @@ def get_viz(dataset, type_, *args):
             go.Bar(x=data2[data2.columns[-1]], y=data2[data2.columns[-2]], orientation='h', name=unidade[1]), 2, 1
         )
 
-        fig.update_traces()
-        fig.update_layout(width=620, template='plotly_white',
+        fig.update_traces(hovertemplate='%{y} <br>%{x}')
+        fig.update_layout(template='plotly_white',
                           legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1))
 
         return fig
@@ -477,11 +484,12 @@ def get_viz(dataset, type_, *args):
     if type_ == 'pesquisa':
         data = dataset.groupby('ano_projeto', as_index=False)['codigo_projeto'].size()
         fig = px.bar(data, x='ano_projeto', y='size', template='plotly_white', labels={'ano_projeto': '', 'size': ''},
-                     text_auto=True, width=1350)
+                     text_auto=True)
 
-        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
-            uniformtext_minsize=12, uniformtext_mode='hide',
+            uniformtext_minsize=11, uniformtext_mode='hide',
             xaxis=dict(tickmode='linear')
         )
 
@@ -515,10 +523,11 @@ def get_viz(dataset, type_, *args):
 
     if type_ == 'pesq_comp_bars':
         fig = px.bar(dataset, 'unidade', 'count', color='situacao', template='plotly_white',
-                     labels={'unidade': '', 'count': '', 'situacao': ''}, text_auto=True, width=620)
+                     labels={'unidade': '', 'count': '', 'situacao': ''}, text_auto=True)
 
-        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
-        fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',
+        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(hovertemplate='%{x} <br>%{y}')
+        fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide',
                           legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1))
 
         return fig
@@ -540,8 +549,8 @@ def get_viz(dataset, type_, *args):
             go.Bar(x=data2[data2.columns[-2]], y=data2[data2.columns[0]], orientation='h', name=unidade[1]), 2, 1
         )
 
-        fig.update_traces()
-        fig.update_layout(width=620, template='plotly_white',
+        fig.update_traces(hovertemplate='%{y} <br>%{x}')
+        fig.update_layout(template='plotly_white',
                           legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
                           xaxis=dict(tickmode='linear'))
 
