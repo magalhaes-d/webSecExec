@@ -25,7 +25,7 @@ st.header('🎓 Web SecExec - UFS\n', anchor=False)
 
 intro_text = '''O **Web SecExec – UFS** é uma ferramenta que coleta e compila dados relacionados ao curso de 
 Secretariado Executivo da Universidade Federal de Sergipe, com enfoque em informações sobre graduação, 
-pós-graduação, atividades de extensão e projetos de pesquisa. A aplicação é atualizada mensalmente, 
+pós-graduação, atividades de extensão e projetos de pesquisa. A aplicação é atualizada quinzenalmente, 
 utilizando dados provenientes do [repositório universitário](https://dados.ufs.br/dataset/). O menu à esquerda 
 fornece informações adicionais sobre a ferramenta.\n
 É recomendado o acesso a partir de um desktop para melhor visualização das figuras. Caso ocorra algum erro ou bug
