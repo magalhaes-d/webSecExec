@@ -18,7 +18,8 @@ def get_dfs(data_path, cat, *args):
     # bloco responsável por coletar os dados necessários à seção de graduação
     if cat == 'graduacao':
         df = pd.read_parquet(data_path).fillna('None')  # caregamento do df e remoção de na
-        df.loc[df['status_discente'].str.startswith('ATIVO'), 'status_discente'] = 'ATIVO'  # unificação da variável ATIVO
+        # unificação da variável ATIVO
+        df.loc[df['status_discente'].str.startswith('ATIVO'), 'status_discente'] = 'ATIVO'
         df = df.loc[(df['status_discente'] != 'CADASTRADO') &  # remoção da var CADASTRADO
                     (df['nome_curso'].str.contains('São Cristóvão'))]  # filtro por SC
 
@@ -106,7 +107,17 @@ def get_dfs(data_path, cat, *args):
         df = pd.read_parquet(data_path).query('unidade.str.startswith("DEPARTAMENTO")')
         df_sec = df.query('unidade.str.contains("SECRETARIADO")')
 
-        datasets = {'sec': df_sec}
+        df_ufs = df.query('unidade.str.startswith("DEPARTAMENTO")').groupby('unidade')['bolsas_concedidas'].sum()
+
+        ccsa_centros = [
+            'DEPARTAMENTO DE ADMINISTRAÇÃO', 'DEPARTAMENTO DE CIÊNCIAS CONTÁBEIS',
+            'DEPARTAMENTO DE CIÊNCIA DA INFORMAÇÃO',
+            'DEPARTAMENTO DE DIREITO', 'DEPARTAMENTO DE ECONOMIA', 'DEPARTAMENTO DE RELAÇÕES INTERNACIONAIS',
+            'DEPARTAMENTO DE SECRETARIADO EXECUTIVO', 'DEPARTAMENTO DE SERVIÇO SOCIAL', 'DEPARTAMENTO DE TURISMO'
+        ]
+        df_ccsa = df.query('unidade.isin(@ccsa_centros)').groupby('unidade')['bolsas_concedidas'].sum()
+
+        datasets = {'sec': df_sec, 'ufs': df_ufs, 'ccsa': df_ccsa}
 
         return datasets
 
@@ -283,10 +294,10 @@ def get_viz(dataset, type_, *args):
             barmode='relative', template='plotly_white'
         )
 
-        fig.update_traces(textfont_size=9, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
-            uniformtext_minsize=9, uniformtext_mode='hide',
+            uniformtext_minsize=12, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
             xaxis=dict(tickmode='linear'), dragmode=False
         )
@@ -374,10 +385,10 @@ def get_viz(dataset, type_, *args):
         fig = px.bar(data, x='COUNT', y='STATUS', text='COUNT', labels={'STATUS': '', 'COUNT': ''},
                      template='plotly_white')
 
-        fig.update_traces(textfont_size=10, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='%{y} <br>%{x}')
         fig.update_layout(
-            uniformtext_minsize=10, uniformtext_mode='hide',
+            uniformtext_minsize=12, uniformtext_mode='hide',
             xaxis=dict(tickmode='linear'), dragmode=False
         )
 
@@ -392,10 +403,10 @@ def get_viz(dataset, type_, *args):
         fig = px.bar(data, 'ano', 'count', color='tipo_atividade', text_auto=True,
                      labels=dict(ano='', count='', tipo_atividade=''), template='plotly_white')
 
-        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
-            uniformtext_minsize=11, uniformtext_mode='hide',
+            uniformtext_minsize=12, uniformtext_mode='hide',
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
             xaxis=dict(tickmode='linear'), dragmode=False
         )
@@ -408,7 +419,7 @@ def get_viz(dataset, type_, *args):
 
         fig.update_traces(textinfo='percent', marker=dict(line=dict(width=1)), textposition='inside',
                           insidetextorientation='horizontal')
-        fig.update_traces(hovertemplate='%{label} <br>%{percent}')
+        fig.update_traces(hovertemplate='%{label} <br>%{value}')
         fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide', dragmode=False)
 
         return fig
@@ -486,10 +497,10 @@ def get_viz(dataset, type_, *args):
         fig = px.bar(data, x='ano_projeto', y='size', template='plotly_white', labels={'ano_projeto': '', 'size': ''},
                      text_auto=True)
 
-        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='Ano: %{x} <br>Total: %{y}')
         fig.update_layout(
-            uniformtext_minsize=11, uniformtext_mode='hide',
+            uniformtext_minsize=12, uniformtext_mode='hide',
             xaxis=dict(tickmode='linear'), dragmode=False
         )
 
@@ -525,9 +536,9 @@ def get_viz(dataset, type_, *args):
         fig = px.bar(dataset, 'unidade', 'count', color='situacao', template='plotly_white',
                      labels={'unidade': '', 'count': '', 'situacao': ''}, text_auto=True)
 
-        fig.update_traces(textfont_size=11, textangle=0, textposition='inside')
+        fig.update_traces(textfont_size=12, textangle=0, textposition='inside')
         fig.update_traces(hovertemplate='%{x} <br>%{y}')
-        fig.update_layout(uniformtext_minsize=11, uniformtext_mode='hide',
+        fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',
                           legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1), dragmode=False)
 
         return fig

@@ -625,6 +625,14 @@ if category == 'Extensão e Pesquisa':
 
             st.write('---')
 
+            non, space, non1 = st.columns([.3, .4, .3])
+            with space:
+                with st.container(border=True):
+                    st.header('Bolsas concedidas:', anchor=False)
+                    st.subheader(ext_data["bolsas_concedidas"].astype(int).sum(), anchor=False)
+
+            st.write('---')
+
             # '''
             # Texto 1 extensão
             # '''
@@ -770,6 +778,16 @@ if category == 'Extensão e Pesquisa':
                 fig9_bttn = st.download_button(
                     '**Baixar imagem**', fig9.to_image(format='png', width=1200, height=800), 'img.png', key='fig9'
                 )
+
+            st.write('---')
+
+            none, card, none1 = st.columns([.3, .4, .3])
+            with card:
+                with st.container(border=True):
+                    st.header('Concessão de Bolsas', anchor=False)
+                    st.caption(f'Mediana dos cursos da unidade {comp}')
+                    st.subheader(f'SEC: {my_datasets["sec"]["bolsas_concedidas"].astype(int).sum()}', anchor=False)
+                    st.subheader(f'{comp}: {round(float(np.median(my_datasets[comp.lower()])))}', anchor=False)
 
         st.write('---')
 
