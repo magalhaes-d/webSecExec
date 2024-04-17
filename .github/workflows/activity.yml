@@ -19,8 +19,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "Auto commit para manutenção de atividade do app" --allow-empty)
+          git commit --allow-empty -m "Auto commit para manutenção da atividade do app"
           
       - name: push changes
         uses: ad-m/github-push-action@master
